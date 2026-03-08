@@ -35,12 +35,10 @@
         .logo { font-size: 22px; font-weight: bold; color: var(--blanc); }
         .logo span { color: var(--rouge); }
 
-        /* Style des liens navigation */
         .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a { color: var(--blanc); font-size: 14px; font-weight: 500; }
         .nav-links a:hover, .nav-links a.active { color: var(--rouge); }
 
-        /* Bouton Menu Mobile (3 lignes) */
         .menu-toggle {
             display: none;
             color: var(--blanc);
@@ -161,13 +159,19 @@
         .footer-contact h4, .footer-social h4 { margin-bottom: 20px; color: var(--rouge); }
         .footer-contact p { font-size: 14px; color: #ccc; margin-bottom: 10px; }
         .footer-contact i { margin-right: 10px; color: var(--rouge); }
+        
+        /* Lien vers WhatsApp et Contacts */
+        .footer-contact a { color: #ccc; transition: 0.3s; }
+        .footer-contact a:hover { color: var(--rouge); }
 
         .social-box { display: flex; gap: 15px; }
         .social-box a { 
             width: 40px; height: 40px; background: var(--rouge); 
             display: flex; align-items: center; justify-content: center; 
             border-radius: 50%; color: var(--blanc); 
+            transition: 0.4s;
         }
+        .social-box a:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(230, 30, 37, 0.4); }
 
         .copyright { text-align: center; padding-top: 30px; font-size: 12px; color: #666; }
 
@@ -177,7 +181,7 @@
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
-        /* --- RESPONSIVE MOBILE (992px) --- */
+        /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 992px) {
             .navbar { padding: 15px 5%; }
             .menu-toggle { display: block; } 
@@ -306,17 +310,17 @@
             </div>
             <div class="footer-contact">
                 <h4>Nos Contacts</h4>
-                <p><i class="fab fa-whatsapp"></i> +1 (206) 336-3900</p>
-                <p><i class="fas fa-phone"></i> +243 84 444 4486</p>
-                <p><i class="fas fa-envelope"></i> infos@paisiblefly.com</p>
+                <p><a href="https://wa.me/12063363900" target="_blank"><i class="fab fa-whatsapp"></i> +1 (206) 336-3900</a></p>
+                <p><a href="tel:+243844444486"><i class="fas fa-phone"></i> +243 84 444 4486</a></p>
+                <p><a href="mailto:infos@paisiblefly.com"><i class="fas fa-envelope"></i> infos@paisiblefly.com</a></p>
             </div>
             <div class="footer-social">
                 <h4>Suivez-Nous</h4>
                 <div class="social-box">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61588388710047" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/paisible.fly/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://tiktok.com/@paisible_fly" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://wa.me/12063363900" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </div>
@@ -326,19 +330,16 @@
     </footer>
 
     <script>
-        // Gestion du menu mobile
         const mobileMenu = document.getElementById('mobile-menu');
         const navList = document.getElementById('nav-list');
 
         mobileMenu.addEventListener('click', () => {
             navList.classList.toggle('active');
-            // Change l'icône de barre en croix quand le menu est ouvert
             const icon = mobileMenu.querySelector('i');
             icon.classList.toggle('fa-bars');
             icon.classList.toggle('fa-times');
         });
 
-        // Fermer le menu mobile lors d'un clic sur un lien
         document.querySelectorAll('.nav-item').forEach(link => {
             link.addEventListener('click', () => {
                 navList.classList.remove('active');
@@ -348,7 +349,6 @@
             });
         });
 
-        // Scroll fluide
         document.querySelectorAll('.nav-item').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
