@@ -1,181 +1,86 @@
-import { useState } from 'react';
-import { Menu, X, ChevronDown, Plane, Globe, Shield, Clock, MapPin, ArrowRight } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paisible Fly - Agency | Agence de Voyage et Logistique</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-// --- COMPOSANT NAVBAR ---
-function Navbar({ onNavigate }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
-
-  const toggleDropdown = (menu) => {
-    setActiveDropdown(activeDropdown === menu ? null : menu);
-  };
-
-  const navItemClass = "px-4 py-2 rounded hover:bg-red-600 transition-colors flex items-center cursor-pointer";
-
-  return (
-    <nav className="bg-black text-white shadow-lg fixed w-full top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex items-center cursor-pointer" onClick={() => onNavigate('home')}>
-            <div className="text-2xl font-bold">
-              <span className="text-red-600">Paisible Fly</span>
-              <span className="text-white"> - Agency</span>
+    <header class="main-header">
+        <div class="top-bar">
+            <div class="contact-info">
+                <span>📞 Appel : +243 84 444 4486</span> | 
+                <span>💬 WhatsApp : +1 (206) 336-3900</span> | 
+                <span>✉️ Mail : infos@paisiblefly.com</span>
             </div>
-          </div>
+        </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1">
-            <button onClick={() => onNavigate('home')} className={navItemClass}>Accueil</button>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>PAISIBLE FLY</h1>
+                <p>Agency</p>
+            </div>
             
-            <div className="relative group">
-              <button className={navItemClass}>
-                À Propos <ChevronDown className="ml-1 w-4 h-4" />
-              </button>
-              <div className="absolute left-0 mt-2 w-56 bg-white text-black rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                {['who-we-are', 'our-team', 'partners', 'policy'].map((item) => (
-                  <button key={item} onClick={() => onNavigate(item)} className="block w-full text-left px-4 py-3 hover:bg-gray-100 capitalize">
-                    {item.replace(/-/g, ' ')}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                
+                <li class="dropdown">
+                    <a href="#apropos">A Propos ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#qui-sommes-nous">Qui Sommes Nous ?</a></li>
+                        <li><a href="#notre-equipe">Notre Equipe</a></li>
+                        <li><a href="#nos-partenaires">Nos Partenaires</a></li>
+                        <li><a href="#notre-politique">Notre Politique</a></li>
+                    </ul>
+                </li>
 
-            <button onClick={() => onNavigate('destinations')} className={navItemClass}>Destinations</button>
+                <li><a href="#destinations">Nos Destinations</a></li>
 
-            <div className="relative group">
-              <button className={navItemClass}>
-                Services <ChevronDown className="ml-1 w-4 h-4" />
-              </button>
-              <div className="absolute left-0 mt-2 w-56 bg-white text-black rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                <button onClick={() => onNavigate('passport')} className="block w-full text-left px-4 py-3 hover:bg-gray-100">Passeport</button>
-                <button onClick={() => onNavigate('immigration')} className="block w-full text-left px-4 py-3 hover:bg-gray-100">Immigration</button>
-                <button onClick={() => onNavigate('freight')} className="block w-full text-left px-4 py-3 hover:bg-gray-100">Fret & Transport</button>
-              </div>
-            </div>
+                <li class="dropdown">
+                    <a href="#services">Nos Services ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#passeport">Passeport</a></li>
+                        <li><a href="#immigration">Immigration</a></li>
+                        <li><a href="#fret">Fret & Transport</a></li>
+                        <li><a href="#reservation">Réservation</a></li>
+                        <li><a href="#assurance">Assurance</a></li>
+                    </ul>
+                </li>
 
-            <button onClick={() => onNavigate('appointment')} className="ml-4 bg-red-600 px-6 py-2 rounded-full font-bold hover:bg-white hover:text-red-600 transition-all">
-              Rendez-Vous
-            </button>
-          </div>
+                <li><a href="#temoignages">Témoignages</a></li>
+                <li><a href="#rendez-vous" class="btn-rdv">Rendez-Vous</a></li>
 
-          {/* Mobile Button */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2 rounded hover:bg-red-600">
-            {isOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-black border-t border-gray-800 animate-in slide-in-from-top">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-             <button onClick={() => { onNavigate('home'); setIsOpen(false); }} className="block w-full text-left px-3 py-2 rounded hover:bg-red-600">Accueil</button>
-             {/* ... Reste du menu mobile identique à votre code ... */}
-          </div>
-        </div>
-      )}
-    </nav>
-  );
-}
-
-// --- COMPOSANT PAGE D'ACCUEIL ---
-export default function HomePage() {
-  const handleNavigate = (page) => console.log("Navigation vers :", page);
-
-  return (
-    <div className="font-sans text-gray-900">
-      <Navbar onNavigate={handleNavigate} />
-
-      {/* SECTION HERO */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1436491865332-7a61a109c0f2?auto=format&fit=crop&q=80&w=2070" 
-            alt="Avion" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50"></div> {/* Overlay pour lisibilité */}
-        </div>
-
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6">
-            Voyagez avec <span className="text-red-600">Sérénité</span>
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-gray-200">
-            Expert en immigration, passeports et logistique internationale. 
-            Paisible Fly s'occupe de tout, pour vous.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <button className="bg-red-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-red-700 transition-all flex items-center justify-center">
-              Nos Destinations <ArrowRight className="ml-2" />
-            </button>
-            <button className="bg-white text-black px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all">
-              Contactez-nous
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION SERVICES RAPIDES */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold">Pourquoi choisir <span className="text-red-600">Paisible Fly</span> ?</h2>
-            <div className="w-20 h-1 bg-red-600 mx-auto mt-4"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-red-600">
-              <Plane className="w-12 h-12 text-red-600 mb-4" />
-              <h3 className="text-xl font-bold mb-2">Immigration</h3>
-              <p className="text-gray-600">Assistance complète pour vos visas et procédures administratives internationales.</p>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-red-600">
-              <Globe className="w-12 h-12 text-red-600 mb-4" />
-              <h3 className="text-xl font-bold mb-2">Fret & Transport</h3>
-              <p className="text-gray-600">Expédiez vos colis partout dans le monde en toute sécurité et rapidité.</p>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border-t-4 border-red-600">
-              <Shield className="w-12 h-12 text-red-600 mb-4" />
-              <h3 className="text-xl font-bold mb-2">Assurance Voyage</h3>
-              <p className="text-gray-600">Partez l'esprit tranquille avec nos couvertures santé et bagages adaptées.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER BASIQUE */}
-      <footer className="bg-black text-white py-12 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <div className="text-xl font-bold mb-4">
-              <span className="text-red-600">Paisible Fly</span>
-            </div>
-            <p className="text-gray-400">Votre partenaire de confiance pour tous vos besoins de mobilité internationale.</p>
-          </div>
-          <div>
-            <h4 className="font-bold mb-4">Liens Rapides</h4>
-            <ul className="text-gray-400 space-y-2">
-              <li className="hover:text-red-600 cursor-pointer">Accueil</li>
-              <li className="hover:text-red-600 cursor-pointer">Nos Destinations</li>
-              <li className="hover:text-red-600 cursor-pointer">Rendez-vous</li>
+                <li class="dropdown">
+                    <a href="#contacts">Contacts ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#prise-contact">Prise de Contact</a></li>
+                        <li><a href="#suivez-nous">Suivez-Nous</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </li>
             </ul>
-          </div>
-          <div>
-            <h4 className="font-bold mb-4">Contact</h4>
-            <ul className="text-gray-400 space-y-2">
-              <li className="flex items-center"><MapPin className="w-4 h-4 mr-2" /> Paris, France</li>
-              <li>contact@paisiblefly.com</li>
-            </ul>
-          </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="accueil" class="hero-section">
+            <h2>Bienvenue chez Paisible Fly - Agency</h2>
+            <p>Votre partenaire de confiance pour vos voyages et votre logistique.</p>
+        </section>
+        
+        <section id="rendez-vous" class="rdv-section">
+            <h2>Prendre un Rendez-Vous</h2>
+            </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Paisible Fly - Agency. Tous droits réservés.</p>
         </div>
-        <div className="text-center mt-12 pt-8 border-t border-gray-800 text-gray-500">
-          © 2024 Paisible Fly - Tous droits réservés.
-        </div>
-      </footer>
-    </div>
-  );
-}
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
