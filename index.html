@@ -3,157 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paisible Fly - Agency | Officiel</title>
+    <title>Paisible Fly - Agency | Site Officiel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- VARIABLES & RESET --- */
+        /* --- CONFIGURATION GLOBALE --- */
         :root {
             --rouge: #e61e25;
             --noir: #000000;
             --blanc: #ffffff;
-            --gris-clair: #f9f9f9;
-            --transition: all 0.3s ease;
+            --gris-fond: #f8f9fa;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { line-height: 1.6; color: #333; overflow-x: hidden; }
-        a { text-decoration: none; color: inherit; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--blanc); color: #333; line-height: 1.6; }
+        a { text-decoration: none; transition: 0.3s; }
         ul { list-style: none; }
 
-        /* --- NAVIGATION --- */
+        /* --- BARRE DE NAVIGATION (Comme l'image 1) --- */
         .navbar {
-            background: var(--noir);
-            color: var(--blanc);
-            padding: 1rem 5%;
+            background-color: var(--noir);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 8%;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #333;
         }
 
-        .logo { font-weight: bold; font-size: 1.4rem; }
+        .logo { font-size: 22px; font-weight: bold; color: var(--blanc); }
         .logo span { color: var(--rouge); }
 
         .nav-links { display: flex; gap: 20px; }
-        .nav-links > li { position: relative; }
-        .nav-links a { font-size: 0.9rem; font-weight: 500; transition: var(--transition); }
+        .nav-links a { color: var(--blanc); font-size: 14px; font-weight: 500; }
         .nav-links a:hover { color: var(--rouge); }
 
-        /* Menus déroulants */
+        /* Dropdown Menu */
+        .dropdown { position: relative; }
         .dropdown-menu {
             position: absolute;
-            top: 100%;
+            top: 40px;
             left: 0;
-            background: var(--blanc);
-            color: var(--noir);
+            background: var(--noir);
             min-width: 180px;
             display: none;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            border-radius: 4px;
-            margin-top: 10px;
+            border-top: 2px solid var(--rouge);
         }
-        .dropdown:hover .dropdown-menu { display: block; animation: slideIn 0.3s ease; }
-        .dropdown-menu li { border-bottom: 1px solid #eee; }
-        .dropdown-menu a { padding: 10px 15px; display: block; color: var(--noir); }
-        .dropdown-menu a:hover { background: var(--gris-clair); color: var(--rouge); }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu li a { padding: 10px 15px; display: block; border-bottom: 1px solid #222; }
 
-        /* --- HERO SECTION --- */
+        /* --- SECTION HERO (Image 1) --- */
         .hero {
-            height: 90vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&q=80&w=1920') center/cover;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             color: var(--blanc);
-            padding: 0 20px;
-            margin-top: 60px;
+            padding-top: 80px;
         }
 
-        .hero h1 { font-size: 4rem; margin-bottom: 10px; animation: fadeInUp 0.8s ease; }
+        .hero h1 { font-size: 60px; font-weight: 800; margin-bottom: 10px; animation: fadeInDown 1s; }
         .hero h1 span { color: var(--rouge); }
-        .hero p { font-size: 1.2rem; max-width: 700px; margin-bottom: 30px; animation: fadeInUp 1s ease; }
+        .hero p { font-size: 18px; max-width: 800px; margin-bottom: 30px; animation: fadeInUp 1s; }
 
         .btn-reserver {
-            background: var(--rouge);
+            background-color: var(--rouge);
             color: var(--blanc);
-            padding: 15px 40px;
-            border-radius: 5px;
+            padding: 15px 45px;
+            font-size: 18px;
             font-weight: bold;
-            font-size: 1.1rem;
-            transition: transform 0.3s ease;
-            animation: fadeInUp 1.2s ease;
+            border-radius: 5px;
             border: none;
             cursor: pointer;
+            transition: 0.4s;
+            animation: zoomIn 1s;
         }
-        .btn-reserver:hover { transform: scale(1.05); background: #c1161b; }
+        .btn-reserver:hover { background-color: #c1161b; transform: scale(1.05); }
 
-        /* --- POURQUOI CHOISIR --- */
-        .features { padding: 80px 10%; text-align: center; background: var(--blanc); }
-        .features h2 { font-size: 2.5rem; margin-bottom: 10px; }
-        .features h2 span { color: var(--rouge); }
-        .features .subtitle { color: #666; margin-bottom: 50px; }
+        /* --- SECTION POURQUOI CHOISIR (Image 2) --- */
+        .why-us { padding: 80px 8%; text-align: center; background: var(--blanc); }
+        .why-us h2 { font-size: 32px; margin-bottom: 10px; }
+        .why-us h2 span { color: var(--rouge); }
+        .why-us p.sub { color: #666; margin-bottom: 50px; }
 
-        .grid-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .feature-card {
-            padding: 40px;
+        .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card {
             background: var(--blanc);
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border-top: 3px solid var(--rouge);
-            transition: var(--transition);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            transition: 0.3s;
+            position: relative;
         }
-        .feature-card:hover { transform: translateY(-10px); }
-        .feature-card i { font-size: 2.5rem; color: var(--rouge); margin-bottom: 20px; }
-        .feature-card h3 { margin-bottom: 15px; }
+        .card:hover { border-top: 4px solid var(--rouge); transform: translateY(-10px); }
+        .card i { font-size: 40px; color: var(--rouge); margin-bottom: 20px; display: block; }
+        .card h3 { margin-bottom: 15px; font-size: 20px; }
+        .card p { color: #777; font-size: 14px; }
 
-        /* --- NOS SERVICES (RED SECTION) --- */
-        .services-section { background: var(--rouge); color: var(--blanc); padding: 80px 10%; text-align: center; }
-        .services-section h2 { font-size: 2.5rem; margin-bottom: 50px; }
-        
-        .grid-services { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .service-box {
+        /* --- SECTION SERVICES (Image 2 - Bande Rouge) --- */
+        .services-red { background-color: var(--rouge); color: var(--blanc); padding: 80px 8%; text-align: center; }
+        .services-red h2 { font-size: 35px; margin-bottom: 60px; }
+
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .service-item {
             background: rgba(255,255,255,0.1);
             padding: 40px 20px;
-            border-radius: 8px;
-            transition: var(--transition);
+            border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
         }
-        .service-box:hover { background: rgba(255,255,255,0.2); }
-        .service-box i { font-size: 3rem; margin-bottom: 20px; }
+        .service-item:hover { background: rgba(255,255,255,0.2); }
+        .service-item i { font-size: 45px; margin-bottom: 20px; }
+        .service-item h3 { font-size: 18px; margin-bottom: 10px; }
+        .service-item p { font-size: 13px; opacity: 0.9; }
 
-        /* --- FOOTER --- */
-        footer { background: var(--noir); color: var(--blanc); padding: 60px 10% 20px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-col h3 { color: var(--rouge); margin-bottom: 20px; }
-        .footer-col p, .footer-col li { font-size: 0.9rem; color: #ccc; margin-bottom: 10px; }
-        .social-icons { display: flex; gap: 15px; margin-top: 20px; }
-        .social-icons a { 
-            width: 35px; height: 35px; background: var(--rouge); display: flex; 
-            align-items: center; justify-content: center; border-radius: 50%; font-size: 1rem;
+        /* --- FOOTER (Image 3) --- */
+        footer { background: var(--noir); color: var(--blanc); padding: 80px 8% 20px; }
+        .footer-content { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 40px; 
+            border-bottom: 1px solid #333;
+            padding-bottom: 40px;
+        }
+        .footer-logo h3 { color: var(--rouge); margin-bottom: 15px; }
+        .footer-contact h4, .footer-social h4 { margin-bottom: 20px; color: var(--rouge); }
+        .footer-contact p { font-size: 14px; color: #ccc; margin-bottom: 10px; }
+        .footer-contact i { margin-right: 10px; color: var(--rouge); }
+
+        .social-box { display: flex; gap: 15px; }
+        .social-box a { 
+            width: 40px; height: 40px; background: var(--rouge); 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 50%; color: var(--blanc); 
         }
 
-        .copyright { text-align: center; padding-top: 20px; border-top: 1px solid #333; font-size: 0.8rem; color: #666; }
+        .copyright { text-align: center; padding-top: 30px; font-size: 12px; color: #666; }
 
         /* --- ANIMATIONS --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
-        /* Responsive */
+        /* Mobile */
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .hero h1 { font-size: 2.5rem; }
+            .hero h1 { font-size: 35px; }
         }
     </style>
 </head>
@@ -162,116 +165,105 @@
     <nav class="navbar">
         <div class="logo">Paisible Fly - <span>Agency</span></div>
         <ul class="nav-links">
-            <li><a href="#">Accueil</a></li>
+            <li><a href="#accueil">Accueil</a></li>
             <li class="dropdown">
-                <a href="#">À Propos <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
+                <a href="#apropos">À Propos <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Qui Sommes Nous ?</a></li>
                     <li><a href="#">Notre Équipe</a></li>
                     <li><a href="#">Nos Partenaires</a></li>
-                    <li><a href="#">Notre Politique</a></li>
                 </ul>
             </li>
-            <li><a href="#">Nos Destinations</a></li>
+            <li><a href="#destinations">Nos Destinations</a></li>
             <li class="dropdown">
-                <a href="#">Nos Services <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
+                <a href="#services">Nos Services <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Passeport</a></li>
                     <li><a href="#">Immigration</a></li>
                     <li><a href="#">Fret & Transport</a></li>
                     <li><a href="#">Réservation</a></li>
-                    <li><a href="#">Assurance</a></li>
                 </ul>
             </li>
-            <li><a href="#">Témoignages</a></li>
-            <li><a href="#">Rendez-Vous</a></li>
-            <li class="dropdown">
-                <a href="#">Contacts <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Prise de Contact</a></li>
-                    <li><a href="#">Suivez-Nous</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </li>
+            <li><a href="#temoignages">Témoignages</a></li>
+            <li><a href="#rdv">Rendez-Vous</a></li>
+            <li><a href="#contacts">Contacts</a></li>
         </ul>
     </nav>
 
-    <section class="hero">
+    <header class="hero" id="accueil">
         <h1>Paisible Fly - <span>Agency</span></h1>
         <p>Votre partenaire de confiance pour vos voyages, passeports, visas et bien plus encore.</p>
-        <button class="btn-reserver" onclick="window.location.href='#rendez-vous'">Réservez</button>
-    </section>
+        <button class="btn-reserver">Réservez</button>
+    </header>
 
-    <section class="features">
+    <section class="why-us">
         <h2>Pourquoi choisir <span>Paisible Fly</span> ?</h2>
-        <p class="subtitle">Une agence complète pour tous vos besoins de voyage et d'immigration</p>
+        <p class="sub">Une agence complète pour tous vos besoins de voyage et d'immigration</p>
         
-        <div class="grid-features">
-            <div class="feature-card">
-                <i class="fa-solid fa-shield-halved"></i>
+        <div class="card-container">
+            <div class="card">
+                <i class="fas fa-shield-alt"></i>
                 <h3>Fiabilité & Sécurité</h3>
                 <p>Nous garantissons la sécurité de vos documents et la confidentialité de vos informations personnelles.</p>
             </div>
-            <div class="feature-card">
-                <i class="fa-solid fa-bolt"></i>
+            <div class="card">
+                <i class="fas fa-history"></i>
                 <h3>Rapidité d'exécution</h3>
                 <p>Notre équipe expérimentée traite vos dossiers rapidement pour vous faire gagner du temps.</p>
             </div>
-            <div class="feature-card">
-                <i class="fa-solid fa-headset"></i>
+            <div class="card">
+                <i class="fas fa-headset"></i>
                 <h3>Support 24/7</h3>
                 <p>Notre équipe est disponible à tout moment pour répondre à vos questions et vous accompagner.</p>
             </div>
         </div>
     </section>
 
-    <section class="services-section">
+    <section class="services-red">
         <h2>Nos Services</h2>
-        <div class="grid-services">
-            <div class="service-box">
-                <i class="fa-solid fa-passport"></i>
+        <div class="service-grid">
+            <div class="service-item">
+                <i class="fas fa-passport"></i>
                 <h3>Passeport</h3>
-                <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">Assistance complète pour l'obtention de votre passeport</p>
+                <p>Assistance complète pour l'obtention de votre passeport</p>
             </div>
-            <div class="service-box">
-                <i class="fa-solid fa-globe"></i>
+            <div class="service-item">
+                <i class="fas fa-globe-africa"></i>
                 <h3>Immigration</h3>
-                <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">Services d'immigration et de visa personnalisés</p>
+                <p>Services d'immigration et de visa personnalisés</p>
             </div>
-            <div class="service-box">
-                <i class="fa-solid fa-ship"></i>
+            <div class="service-item">
+                <i class="fas fa-ship"></i>
                 <h3>Fret & Transport</h3>
-                <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">Solutions de transport fiables et sécurisées</p>
+                <p>Solutions de transport fiables et sécurisées</p>
             </div>
-            <div class="service-box">
-                <i class="fa-solid fa-plane-up"></i>
+            <div class="service-item">
+                <i class="fas fa-plane-departure"></i>
                 <h3>Réservation</h3>
-                <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">Réservez vos vols et hébergements facilement</p>
+                <p>Réservez vos vols et hébergements facilement</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
+        <div class="footer-content">
+            <div class="footer-logo">
                 <h3>Paisible Fly - Agency</h3>
-                <p>Votre partenaire de confiance pour tous vos besoins de voyage, immigration et services consulaires.</p>
+                <p style="font-size: 14px; color: #ccc;">Votre partenaire de confiance pour tous vos besoins de voyage, immigration et services consulaires.</p>
             </div>
-            <div class="footer-col">
-                <h3>Nos Contacts</h3>
-                <ul>
-                    <li><i class="fa-brands fa-whatsapp" style="color: var(--rouge);"></i> +1 (206) 336-3900</li>
-                    <li><i class="fa-solid fa-phone" style="color: var(--rouge);"></i> +243 84 444 4486</li>
-                    <li><i class="fa-solid fa-envelope" style="color: var(--rouge);"></i> infos@paisiblefly.com</li>
-                </ul>
+            <div class="footer-contact">
+                <h4>Nos Contacts</h4>
+                <p><i class="fab fa-whatsapp"></i> +1 (206) 336-3900</p>
+                <p><i class="fas fa-phone"></i> +243 84 444 4486</p>
+                <p><i class="fas fa-envelope"></i> infos@paisiblefly.com</p>
             </div>
-            <div class="footer-col">
-                <h3>Suivez-Nous</h3>
-                <div class="social-icons">
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            <div class="footer-social">
+                <h4>Suivez-Nous</h4>
+                <div class="social-box">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
