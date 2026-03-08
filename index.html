@@ -35,7 +35,8 @@
         .logo { font-size: 22px; font-weight: bold; color: var(--blanc); }
         .logo span { color: var(--rouge); }
 
-        .nav-links { display: flex; gap: 20px; }
+        /* Style des liens navigation */
+        .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a { color: var(--blanc); font-size: 14px; font-weight: 500; }
         .nav-links a:hover, .nav-links a.active { color: var(--rouge); }
 
@@ -176,13 +177,13 @@
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
-        /* --- RESPONSIVE MOBILE --- */
+        /* --- RESPONSIVE MOBILE (992px) --- */
         @media (max-width: 992px) {
             .navbar { padding: 15px 5%; }
-            .menu-toggle { display: block; } /* Affiche les 3 lignes */
+            .menu-toggle { display: block; } 
 
             .nav-links {
-                display: none; /* Cache le menu par défaut */
+                display: none; 
                 flex-direction: column;
                 position: absolute;
                 top: 100%;
@@ -192,14 +193,16 @@
                 padding: 20px;
                 text-align: center;
                 gap: 15px;
+                border-top: 1px solid #222;
             }
 
-            .nav-links.active { display: flex; } /* Affiche le menu quand on clique */
+            .nav-links.active { display: flex; } 
 
             .dropdown-menu {
                 position: static;
                 width: 100%;
                 background: #111;
+                margin-top: 10px;
             }
             .hero h1 { font-size: 35px; }
         }
@@ -235,6 +238,7 @@
                 </ul>
             </li>
             <li><a href="#temoignages" class="nav-item">Témoignages</a></li>
+            <li><a href="#compte" class="nav-item">Mon Compte</a></li>
             <li><a href="#rdv" class="nav-item">Rendez-Vous</a></li>
             <li><a href="#contacts" class="nav-item">Contacts</a></li>
         </ul>
@@ -322,18 +326,25 @@
     </footer>
 
     <script>
-        // Gestion du menu mobile (3 lignes)
+        // Gestion du menu mobile
         const mobileMenu = document.getElementById('mobile-menu');
         const navList = document.getElementById('nav-list');
 
         mobileMenu.addEventListener('click', () => {
             navList.classList.toggle('active');
+            // Change l'icône de barre en croix quand le menu est ouvert
+            const icon = mobileMenu.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         });
 
-        // Fermer le menu quand on clique sur un lien
+        // Fermer le menu mobile lors d'un clic sur un lien
         document.querySelectorAll('.nav-item').forEach(link => {
             link.addEventListener('click', () => {
                 navList.classList.remove('active');
+                const icon = mobileMenu.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
             });
         });
 
@@ -345,7 +356,10 @@
                     e.preventDefault();
                     const target = document.querySelector(href);
                     if(target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
+                        window.scrollTo({
+                            top: target.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
                     }
                 }
             });
