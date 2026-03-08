@@ -3,138 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paisible Fly - Agency | Futuriste</title>
+    <title>Paisible Fly - Agency | Officiel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- CONFIGURATION GLOBALE --- */
+        /* --- CONFIGURATION ET THÈME --- */
         :root {
             --rouge: #e61e25;
             --noir: #000000;
             --blanc: #ffffff;
-            --glow-rouge: rgba(230, 30, 37, 0.6);
+            --gris-clair: #f4f4f4;
+            --glow-rouge: rgba(230, 30, 37, 0.7);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--blanc); color: #333; line-height: 1.6; overflow-x: hidden; }
-        a { text-decoration: none; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: var(--blanc); overflow-x: hidden; scroll-behavior: smooth; }
         ul { list-style: none; }
+        a { text-decoration: none; color: inherit; }
 
-        /* --- ANIMATION FUTURISTE POUR TOUS LES BOUTONS --- */
-        .btn-futuriste, .btn-reserver, .social-box a, .nav-links a {
+        /* --- ANIMATIONS FUTURISTES (GLOW & BLUR) --- */
+        .btn-glow {
             position: relative;
+            transition: var(--transition);
             overflow: hidden;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
         }
 
-        /* Effet de flou lumineux (Glow Blur) au survol */
-        .btn-reserver:hover, .social-box a:hover {
-            transform: translateY(-3px) scale(1.05);
+        .btn-glow:hover {
+            transform: scale(1.05);
             box-shadow: 0 0 20px var(--glow-rouge), 0 0 40px var(--glow-rouge);
             filter: brightness(1.2);
-            letter-spacing: 1px;
         }
 
-        /* Animation de balayage lumineux interne */
-        .btn-reserver::before {
+        /* Effet de balayage laser */
+        .btn-glow::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: 0.6s;
+            top: -50%; left: -100%;
+            width: 50%; height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: 0.5s;
         }
-        .btn-reserver:hover::before { left: 100%; }
 
-        /* --- NAVIGATION --- */
+        .btn-glow:hover::after { left: 150%; }
+
+        /* --- BARRE DE NAVIGATION (Image 4) --- */
         .navbar {
-            background-color: var(--noir);
+            background: var(--noir);
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 8%;
             position: fixed;
             width: 100%;
             top: 0; z-index: 1000;
         }
 
-        .logo { font-size: 22px; font-weight: bold; color: var(--blanc); }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--blanc); }
         .logo span { color: var(--rouge); }
 
         .nav-links { display: flex; gap: 20px; }
-        .nav-links a { 
-            color: var(--blanc); 
-            font-size: 14px; 
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-        .nav-links a:hover { 
-            color: var(--rouge); 
-            background: rgba(230, 30, 37, 0.1);
-            text-shadow: 0 0 8px var(--rouge);
-        }
+        .nav-links > li { position: relative; }
+        .nav-links a { color: var(--blanc); font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--rouge); text-shadow: 0 0 10px var(--rouge); }
 
-        .dropdown:hover .dropdown-menu { display: block; animation: blurFadeIn 0.4s ease; }
+        /* Fenêtres Déroulantes */
         .dropdown-menu {
-            position: absolute; top: 40px; left: 0;
-            background: var(--noir); min-width: 180px; display: none;
-            border-top: 2px solid var(--rouge);
-            backdrop-filter: blur(10px); /* Flou futuriste en arrière-plan */
+            position: absolute;
+            top: 100%; left: 0;
+            background: var(--noir);
+            min-width: 200px;
+            display: none;
+            padding: 10px 0;
+            border-top: 3px solid var(--rouge);
+            backdrop-filter: blur(15px);
+            animation: blurSlide 0.4s ease forwards;
         }
 
-        /* --- HERO SECTION --- */
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu li a { padding: 10px 20px; display: block; border-bottom: 1px dotted #333; }
+        .dropdown-menu li a:hover { background: rgba(230, 30, 37, 0.1); }
+
+        @keyframes blurSlide {
+            from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0); }
+        }
+
+        /* --- HERO SECTION (Image 1) --- */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop'); 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80');
             background-size: cover; background-position: center;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; color: var(--blanc); padding-top: 80px;
         }
 
-        .hero h1 { font-size: 60px; font-weight: 800; margin-bottom: 10px; }
-        .hero h1 span { color: var(--rouge); text-shadow: 0 0 15px var(--rouge); }
+        .hero h1 { font-size: 4rem; margin-bottom: 15px; }
+        .hero h1 span { color: var(--rouge); }
+        .hero p { font-size: 1.2rem; max-width: 800px; margin-bottom: 40px; }
 
         .btn-reserver {
-            background-color: var(--rouge);
+            background: var(--rouge);
             color: var(--blanc);
-            padding: 16px 50px;
-            font-size: 18px;
-            font-weight: bold;
+            padding: 15px 40px;
             border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.1rem;
             border: none;
-            cursor: pointer;
-            margin-top: 20px;
         }
 
-        /* --- SECTIONS SERVICES & WHY US --- */
-        .services-red { background-color: var(--rouge); color: var(--blanc); padding: 80px 8%; text-align: center; }
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .service-item {
+        /* --- SECTION POURQUOI CHOISIR (Image 2) --- */
+        .features { padding: 80px 10%; text-align: center; }
+        .features h2 span { color: var(--rouge); }
+        .grid-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        
+        .card {
+            padding: 40px; background: var(--blanc);
+            border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #eee; transition: 0.3s;
+        }
+        .card:hover { border-top: 4px solid var(--rouge); transform: translateY(-10px); }
+        .card i { font-size: 2.5rem; color: var(--rouge); margin-bottom: 20px; }
+
+        /* --- SECTION SERVICES (Image 2 - Bande Rouge) --- */
+        .services-band { background: var(--rouge); color: var(--blanc); padding: 80px 10%; text-align: center; }
+        .grid-services { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
+        
+        .service-box {
             background: rgba(255,255,255,0.1);
-            padding: 40px 20px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: 0.4s;
+            padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
         }
-        .service-item:hover { 
-            background: var(--blanc); 
-            color: var(--rouge);
-            box-shadow: 0 0 30px rgba(255,255,255,0.3);
-            transform: scale(1.03);
+        .service-box:hover { background: rgba(255,255,255,0.25); filter: blur(0px); }
+        .service-box i { font-size: 3rem; margin-bottom: 20px; }
+
+        /* --- FOOTER (Image 3) --- */
+        footer { background: var(--noir); color: var(--blanc); padding: 80px 10% 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; }
+        .footer-col h3, .footer-col h4 { color: var(--rouge); margin-bottom: 25px; }
+        .footer-col p { font-size: 0.9rem; color: #ccc; margin-bottom: 10px; }
+
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-btn {
+            width: 40px; height: 40px; background: var(--rouge);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; color: var(--blanc);
         }
 
-        /* --- FOOTER --- */
-        footer { background: var(--noir); color: var(--blanc); padding: 60px 8% 20px; }
-        .social-box a { 
-            width: 45px; height: 45px; background: var(--rouge); 
-            display: flex; align-items: center; justify-content: center; 
-            border-radius: 50%; color: var(--blanc); font-size: 1.2rem;
-        }
+        .copyright { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #222; font-size: 0.8rem; color: #666; }
 
-        /* --- KEYFRAMES --- */
-        @keyframes blurFadeIn {
-            from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
-            to { opacity: 1; filter: blur(0); transform: translateY(0); }
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -149,50 +171,124 @@
                 <ul class="dropdown-menu">
                     <li><a href="#">Qui Sommes Nous ?</a></li>
                     <li><a href="#">Notre Équipe</a></li>
+                    <li><a href="#">Nos Partenaires</a></li>
+                    <li><a href="#">Notre Politique</a></li>
                 </ul>
             </li>
+            <li><a href="#">Nos Destinations</a></li>
             <li class="dropdown">
                 <a href="#">Nos Services <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Passeport</a></li>
                     <li><a href="#">Immigration</a></li>
                     <li><a href="#">Fret & Transport</a></li>
+                    <li><a href="#">Réservation</a></li>
+                    <li><a href="#">Assurance</a></li>
                 </ul>
             </li>
+            <li><a href="#">Témoignages</a></li>
             <li><a href="#">Rendez-Vous</a></li>
-            <li><a href="#">Contacts</a></li>
+            <li class="dropdown">
+                <a href="#">Contacts <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Prise de Contact</a></li>
+                    <li><a href="#">Suivez-Nous</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 
-    <header class="hero">
-        <h1 style="animation: blurFadeIn 1s ease;">Paisible Fly - <span>Agency</span></h1>
-        <p style="animation: blurFadeIn 1.5s ease;">L'excellence du voyage et de la logistique à votre portée.</p>
-        <button class="btn-reserver">Réservez</button>
-    </header>
+    <section class="hero">
+        <h1>Paisible Fly - <span>Agency</span></h1>
+        <p>Votre partenaire de confiance pour vos voyages, passeports, visas et bien plus encore.</p>
+        <button class="btn-reserver btn-glow">Réservez</button>
+    </section>
 
-    <section class="services-red">
-        <h2 style="margin-bottom: 40px;">Nos Services Premium</h2>
-        <div class="service-grid">
-            <div class="service-item"><i class="fas fa-passport fa-3x"></i><h3>Passeport</h3></div>
-            <div class="service-item"><i class="fas fa-globe-africa fa-3x"></i><h3>Immigration</h3></div>
-            <div class="service-item"><i class="fas fa-ship fa-3x"></i><h3>Fret</h3></div>
-            <div class="service-item"><i class="fas fa-plane-departure fa-3x"></i><h3>Vols</h3></div>
+    <section class="features">
+        <h2>Pourquoi choisir <span>Paisible Fly</span> ?</h2>
+        <p style="color: #666;">Une agence complète pour tous vos besoins de voyage et d'immigration</p>
+        
+        <div class="grid-features">
+            <div class="card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Fiabilité & Sécurité</h3>
+                <p>Nous garantissons la sécurité de vos documents et la confidentialité de vos informations personnelles.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-bolt"></i>
+                <h3>Rapidité d'exécution</h3>
+                <p>Notre équipe expérimentée traite vos dossiers rapidement pour vous faire gagner du temps.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-headset"></i>
+                <h3>Support 24/7</h3>
+                <p>Notre équipe est disponible à tout moment pour répondre à vos questions et vous accompagner.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="services-band">
+        <h2>Nos Services</h2>
+        <div class="grid-services">
+            <div class="service-box">
+                <i class="fas fa-passport"></i>
+                <h3>Passeport</h3>
+                <p>Assistance pour l'obtention</p>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-globe"></i>
+                <h3>Immigration</h3>
+                <p>Visas personnalisés</p>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-truck-loading"></i>
+                <h3>Fret & Transport</h3>
+                <p>Solutions sécurisées</p>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-plane"></i>
+                <h3>Réservation</h3>
+                <p>Vols et hébergements</p>
+            </div>
         </div>
     </section>
 
     <footer>
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-            <div>
-                <h3 style="color: var(--rouge);">Suivez-Nous</h3>
-                <div class="social-box" style="margin-top: 15px; display: flex; gap: 15px;">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Paisible Fly - Agency</h3>
+                <p>Votre partenaire de confiance pour tous vos besoins de voyage, immigration et services consulaires.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Nos Contacts</h4>
+                <p><i class="fab fa-whatsapp"></i> +1 (206) 336-3900</p>
+                <p><i class="fas fa-phone"></i> +243 84 444 4486</p>
+                <p><i class="fas fa-envelope"></i> infos@paisiblefly.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Suivez-Nous</h4>
+                <div class="social-links">
+                    <a href="#" class="social-btn btn-glow"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-btn btn-glow"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-btn btn-glow"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-btn btn-glow"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
-            <p>&copy; 2026 Paisible Fly - Agency. Tous droits réservés.</p>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Paisible Fly - Agency. Tous droits réservés.
         </div>
     </footer>
 
+    <script>
+        // Script pour gérer les clics sur les boutons et les redirections
+        document.querySelectorAll('.btn-glow').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log("Action activée sur : " + this.innerText);
+                // Ajoutez ici vos fonctions de redirection ou d'ouverture de formulaires
+            });
+        });
+    </script>
 </body>
 </html>
