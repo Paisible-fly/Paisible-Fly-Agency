@@ -109,6 +109,80 @@
         }
         .btn-reserver:hover { background-color: #c1161b; transform: scale(1.05); }
 
+        /* --- MODAL (POP-UP) RESERVATION --- */
+        .modal {
+            display: none; /* Masqué par défaut */
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: var(--blanc);
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s;
+            color: #333;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #888;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover { color: var(--rouge); }
+
+        .modal-content h2 { text-align: center; margin-bottom: 20px; font-size: 24px; }
+        .modal-content h2 span { color: var(--rouge); }
+
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--rouge);
+            outline: none;
+            box-shadow: 0 0 5px rgba(230, 30, 37, 0.3);
+        }
+
+        .btn-submit {
+            background-color: var(--noir);
+            color: var(--blanc);
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-submit:hover { background-color: var(--rouge); }
+
         /* --- SECTION POURQUOI CHOISIR --- */
         .why-us { padding: 80px 8%; text-align: center; background: var(--blanc); }
         .why-us h2 { font-size: 32px; margin-bottom: 10px; }
@@ -160,7 +234,6 @@
         .footer-contact p { font-size: 14px; color: #ccc; margin-bottom: 10px; }
         .footer-contact i { margin-right: 10px; color: var(--rouge); }
         
-        /* Lien vers WhatsApp et Contacts */
         .footer-contact a { color: #ccc; transition: 0.3s; }
         .footer-contact a:hover { color: var(--rouge); }
 
@@ -243,7 +316,6 @@
             </li>
             <li><a href="#temoignages" class="nav-item">Témoignages</a></li>
             <li><a href="#compte" class="nav-item">Mon Compte</a></li>
-            <li><a href="#rdv" class="nav-item">Rendez-Vous</a></li>
             <li><a href="#contacts" class="nav-item">Contacts</a></li>
         </ul>
     </nav>
@@ -251,8 +323,45 @@
     <header class="hero" id="accueil">
         <h1>Paisible Fly - <span>Agency</span></h1>
         <p>Votre partenaire de confiance pour vos voyages, passeports, visas et bien plus encore.</p>
-        <button class="btn-reserver" onclick="location.href='#rdv'">Réservez</button>
+        <button class="btn-reserver" id="btnOpenModal">Réservez</button>
     </header>
+
+    <div id="reservationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="btnCloseModal">&times;</span>
+            <h2>Demande de <span>Rendez-vous</span></h2>
+            <form id="formReservation">
+                <div class="form-group">
+                    <label for="nom">Nom complet</label>
+                    <input type="text" id="nom" placeholder="Ex: Jean Dupont" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Adresse Email</label>
+                    <input type="email" id="email" placeholder="Ex: jean.dupont@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Numéro de téléphone</label>
+                    <input type="tel" id="telephone" placeholder="Ex: +243 84 444 4486" required>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service concerné</label>
+                    <select id="service" required>
+                        <option value="">Sélectionnez un service...</option>
+                        <option value="passeport">Demande de Passeport</option>
+                        <option value="visa">Immigration / Visa</option>
+                        <option value="billet">Achat de billet d'avion</option>
+                        <option value="fret">Fret & Transport</option>
+                        <option value="autre">Autre demande</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Détails de votre demande</label>
+                    <textarea id="message" rows="3" placeholder="Précisez votre destination, date prévue, etc." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Envoyer la demande</button>
+            </form>
+        </div>
+    </div>
 
     <section class="why-us" id="apropos">
         <h2>Pourquoi choisir <span>Paisible Fly</span> ?</h2>
@@ -330,6 +439,7 @@
     </footer>
 
     <script>
+        // --- GESTION DU MENU MOBILE ---
         const mobileMenu = document.getElementById('mobile-menu');
         const navList = document.getElementById('nav-list');
 
@@ -349,6 +459,37 @@
             });
         });
 
+        // --- GESTION DE LA MODALE DE RÉSERVATION ---
+        const modal = document.getElementById("reservationModal");
+        const btnOpen = document.getElementById("btnOpenModal");
+        const btnClose = document.getElementById("btnCloseModal");
+
+        // Ouvrir la modale
+        btnOpen.addEventListener("click", () => {
+            modal.style.display = "flex";
+        });
+
+        // Fermer avec la croix
+        btnClose.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        // Fermer en cliquant en dehors de la boîte
+        window.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        // Empêcher l'envoi du formulaire pour la démo
+        document.getElementById("formReservation").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("Votre demande de réservation a été envoyée avec succès !");
+            modal.style.display = "none";
+            this.reset(); // Vide le formulaire
+        });
+
+        // --- DÉFILEMENT DOUX ---
         document.querySelectorAll('.nav-item').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
