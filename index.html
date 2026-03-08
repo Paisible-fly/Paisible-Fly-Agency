@@ -39,6 +39,14 @@
         .nav-links a { color: var(--blanc); font-size: 14px; font-weight: 500; }
         .nav-links a:hover, .nav-links a.active { color: var(--rouge); }
 
+        /* Bouton Menu Mobile (3 lignes) */
+        .menu-toggle {
+            display: none;
+            color: var(--blanc);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
         /* Dropdown Menu */
         .dropdown { position: relative; }
         .dropdown-menu {
@@ -53,7 +61,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
         
-        /* Animation fluide pour l'apparition */
         .dropdown:hover .dropdown-menu { 
             display: block; 
             animation: fadeIn 0.3s ease;
@@ -101,11 +108,7 @@
             transition: 0.4s;
             animation: zoomIn 1s;
         }
-        .btn-reserver:hover { 
-            background-color: #c1161b; 
-            transform: scale(1.05); 
-            box-shadow: 0 0 20px rgba(230, 30, 37, 0.4);
-        }
+        .btn-reserver:hover { background-color: #c1161b; transform: scale(1.05); }
 
         /* --- SECTION POURQUOI CHOISIR --- */
         .why-us { padding: 80px 8%; text-align: center; background: var(--blanc); }
@@ -164,7 +167,6 @@
             display: flex; align-items: center; justify-content: center; 
             border-radius: 50%; color: var(--blanc); 
         }
-        .social-box a:hover { transform: translateY(-5px); background: #c1161b; }
 
         .copyright { text-align: center; padding-top: 30px; font-size: 12px; color: #666; }
 
@@ -174,8 +176,31 @@
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; } /* On pourrait ajouter un menu burger ici */
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 992px) {
+            .navbar { padding: 15px 5%; }
+            .menu-toggle { display: block; } /* Affiche les 3 lignes */
+
+            .nav-links {
+                display: none; /* Cache le menu par défaut */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--noir);
+                padding: 20px;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .nav-links.active { display: flex; } /* Affiche le menu quand on clique */
+
+            .dropdown-menu {
+                position: static;
+                width: 100%;
+                background: #111;
+            }
             .hero h1 { font-size: 35px; }
         }
     </style>
@@ -184,7 +209,12 @@
 
     <nav class="navbar">
         <div class="logo">Paisible Fly - <span>Agency</span></div>
-        <ul class="nav-links">
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <ul class="nav-links" id="nav-list">
             <li><a href="#accueil" class="nav-item">Accueil</a></li>
             <li class="dropdown">
                 <a href="#apropos" class="nav-item">À Propos <i class="fas fa-chevron-down"></i></a>
@@ -219,7 +249,6 @@
     <section class="why-us" id="apropos">
         <h2>Pourquoi choisir <span>Paisible Fly</span> ?</h2>
         <p class="sub">Une agence complète pour tous vos besoins de voyage et d'immigration</p>
-        
         <div class="card-container">
             <div class="card">
                 <i class="fas fa-shield-alt"></i>
@@ -293,35 +322,31 @@
     </footer>
 
     <script>
-        // 1. Gestion du scroll fluide et activation des liens au clic
+        // Gestion du menu mobile (3 lignes)
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
+
+        mobileMenu.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+
+        // Fermer le menu quand on clique sur un lien
+        document.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+            });
+        });
+
+        // Scroll fluide
         document.querySelectorAll('.nav-item').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
                 if (href.startsWith('#')) {
                     e.preventDefault();
-                    document.querySelector(href).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // 2. Surlignage automatique du menu selon la position de la page
-        window.addEventListener('scroll', () => {
-            let current = "";
-            const sections = document.querySelectorAll('section, header, footer');
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            document.querySelectorAll('.nav-item').forEach(li => {
-                li.classList.remove('active');
-                if (li.getAttribute('href') === `#${current}`) {
-                    li.classList.add('active');
+                    const target = document.querySelector(href);
+                    if(target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             });
         });
