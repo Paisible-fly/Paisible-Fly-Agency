@@ -1,9 +1,46 @@
+<?php
+// --- TRAITEMENT PHP POUR XAMPP ---
+// Ce code s'exécute en arrière-plan quand le JavaScript envoie les données
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // 1. Connexion à ta base de données
+    $conn = mysqli_connect("localhost", "root", "", "agence_voyage");
+
+    if ($conn) {
+        // 2. On récupère les informations du formulaire
+        // (PHP remplace automatiquement les espaces par des tirets du bas _)
+        $nom = $_POST['Nom_Complet'] ?? '';
+        $email = $_POST['Email'] ?? '';
+        
+        // Pour la destination, on vérifie si le client a choisi "Autre"
+        $destination = $_POST['Pays'] ?? '';
+        if ($destination === 'Autre') {
+            $destination = $_POST['Autre_Pays'] ?? 'Non précisé';
+        }
+
+        // Sécurisation des textes
+        $nom = mysqli_real_escape_string($conn, $nom);
+        $email = mysqli_real_escape_string($conn, $email);
+        $destination = mysqli_real_escape_string($conn, $destination);
+
+        // 3. Insertion dans ta table (qui contient id, nom, email, destination)
+        $sql = "INSERT INTO reservation (nom, email, destination) VALUES ('$nom', '$email', '$destination')";
+        mysqli_query($conn, $sql);
+        
+        mysqli_close($conn);
+    }
+    
+    // 4. On arrête le script ici pour que le JavaScript affiche l'écran de succès
+    http_response_code(200);
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réservez Voyage</title>
+    <title>Réservez Voyage - Paisible Fly</title>
     <style>
         /* --- VARIABLES & RESET --- */
         :root {
@@ -71,12 +108,14 @@
         .btn-whatsapp:hover { background: #1ebd5a; }
         .btn-print { background: #6c757d; }
         .btn-print:hover { background: #5a6268; }
+        .btn-home { background: var(--primary); }
+        .btn-home:hover { background: var(--primary-hover); }
 
         /* Success Screen */
         #success-screen { text-align: center; padding: 40px 20px; }
         #success-screen h2 { color: var(--success-color); margin-bottom: 15px; font-size: 2em; }
         .action-buttons { display: flex; gap: 15px; margin-top: 30px; flex-direction: column; }
-        @media(min-width: 600px) { .action-buttons { flex-direction: row; } }
+        @media(min-width: 600px) { .action-buttons { flex-direction: row; flex-wrap: wrap; justify-content: center; } }
 
         /* Print formatting */
         @media print {
@@ -97,7 +136,7 @@
         <p>Remplissez ce formulaire pour réserver votre voyage auprès de notre agence.</p>
     </div>
 
-    <form id="booking-form" action="https://formspree.io/f/xnnvbeqp" method="POST" novalidate>
+    <form id="booking-form" action="" method="POST" novalidate>
         
         <h2 class="section-title">👤 Données Personnelles</h2>
         
@@ -265,13 +304,14 @@
 
     <div id="success-screen" class="hidden">
         <h2>🎉 Félicitations !</h2>
-        <p><strong>Merci très cher client, votre réservation a été envoyée avec succès !</strong></p>
+        <p><strong>Merci très cher client, votre réservation a été enregistrée avec succès !</strong></p>
         <p>Notre équipe spécialisée va vous contacter après l’étude de votre demande pour un devis ou une prise de rendez-vous.</p>
         <p style="margin-top: 15px; color: var(--secondary);"><em>Pour plus de rapidité, veuillez confirmer votre demande sur WhatsApp.</em></p>
         
         <div class="action-buttons">
             <button id="btn-go-whatsapp" class="btn btn-whatsapp">💬 Confirmer sur WhatsApp</button>
             <button id="btn-imprimer" class="btn btn-print">🖨️ Imprimer la réservation</button>
+            <button onclick="window.location.href='index.html'" class="btn btn-home">🏠 Retour à l'accueil</button>
         </div>
     </div>
 
@@ -402,11 +442,11 @@
             if (val === "Non") nonDiv.classList.remove('hidden');
         };
 
-        // --- VALIDATION ET SOUMISSION (AJAX) ---
+        // --- VALIDATION ET SOUMISSION VERS XAMPP (AJAX) ---
         const form = document.getElementById('booking-form');
         
         form.addEventListener('submit', async function(e) {
-            e.preventDefault(); // Empêche le rechargement
+            e.preventDefault(); // Empêche le rechargement brutal
             let isValid = true;
             
             // Réinitialise les erreurs
@@ -440,17 +480,17 @@
             // Changer le bouton en chargement
             const submitBtn = document.querySelector('.btn-submit');
             const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = "⏳ Envoi en cours...";
+            submitBtn.innerHTML = "⏳ Enregistrement en cours...";
             submitBtn.disabled = true;
 
-            // Envoi via Fetch à Formspree
+            // Préparation des données
             const formData = new FormData(form);
             
             try {
-                const response = await fetch(form.action, {
+                // Modification ici : on envoie à la même page PHP ("") au lieu de Formspree
+                const response = await fetch("", {
                     method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
+                    body: formData
                 });
 
                 if (response.ok) {
@@ -459,12 +499,12 @@
                     document.getElementById('success-screen').classList.remove('hidden');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
-                    alert("Une erreur s'est produite lors de l'envoi. Veuillez réessayer.");
+                    alert("Une erreur s'est produite lors de l'enregistrement. Veuillez réessayer.");
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
                 }
             } catch (error) {
-                alert("Erreur de connexion. Vérifiez votre réseau.");
+                alert("Erreur de connexion. Vérifiez que votre serveur XAMPP est bien allumé.");
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
